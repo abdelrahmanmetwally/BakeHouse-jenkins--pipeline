@@ -2,16 +2,22 @@ pipeline {
     agent {label 'smart-village'}
 
     stages {
-        stage('test') {
+      
+        stage('build') {            
             steps {
-                sh "ls" 
-            }
-        }
-        stage('build') {
-            steps {
-                sh '''
-                echo ${BUILD_NUMBER}
-                '''
+                echo 'build'
+                script {
+                  withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME_iti', passwordVariable: 'PASSWORD_iti')]) {
+                            sh '''
+                            docker login -u ${USERNAME_iti} -p ${PASSWORD_iti}
+                                docker login -u ${USERNAME} -p ${PASSWORD}
+                                docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .
+                              
+                                docker push 
+                                
+                                '''
+                       }
+                                
             }
         }
         stage('deploy') {
