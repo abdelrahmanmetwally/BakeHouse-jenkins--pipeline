@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent {label 'smart-village'}
 
     stages {
         stage('test') {
