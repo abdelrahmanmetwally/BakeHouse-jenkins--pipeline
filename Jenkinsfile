@@ -22,7 +22,17 @@ pipeline {
         }
         stage('deploy') {
             steps {
-                sh " echo 'hello from jenkins lab2 '"
+                echo 'deploy'
+                 script {
+                   
+                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                            sh '''
+                                mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
+                                cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
+                                rm -f Deployment/deploy.yaml.tmp
+                                kubectl apply -f Deployment --kubeconfig ${KUBECONFIG} 
+                            '''
+           
             }
         }
     }
