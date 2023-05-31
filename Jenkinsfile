@@ -13,7 +13,7 @@ pipeline {
                                 docker login -u ${USERNAME} -p ${PASSWORD}
                                 docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .
                               
-                                docker push 
+                                docker push abdo23/bakehouseiti:v${BUILD_NUMBER}
                                 
                                 '''
                        }
