@@ -8,9 +8,9 @@ pipeline {
                 echo 'build'
                 script {
 //                   if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
-                  withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME_iti', passwordVariable: 'PASSWORD_iti')]) {
+                  withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
-                               docker login -u ${USERNAME_iti} -p ${PASSWORD_iti}
+                               docker login -u ${USERNAME} -p ${PASSWORD}
                                
                                  sudo docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .                             
                                 sudo docker push  abdo23/bakehouseiti:v${BUILD_NUMBER}
