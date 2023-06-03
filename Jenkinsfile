@@ -1,27 +1,24 @@
 pipeline {
-    agent {label 'smart-village'}
-
+    agent { label 'smart-village' }
     stages {
-      
-        stage('build') {            
+        stage('build') {
             steps {
                 echo 'build'
-                script {
-                          if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
-                  withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                script{
+                    if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
+                        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
-                               docker login -u ${USERNAME} -p ${PASSWORD}
-                                  docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .                              
-                                   docker push  abdo23/bakehouseiti:v${BUILD_NUMBER}    
-
-                                      echo ${BUILD_NUMBER} > ../build.txt                        
-
-                                '''
-                          }
-                     }
-                   else {  echo "choosen branch ${BRANCH_NAME}"}
-                    
-                }      
+                                docker login -u ${USERNAME} -p ${PASSWORD}
+                                docker build -t abdo23/bakehouseiti:v${BUILD_NUMBER} .
+                                docker push abdo23/bakehouseiti:v${BUILD_NUMBER}
+                                echo ${BUILD_NUMBER} > ../build.txt
+                            '''
+                        }
+                    }
+                    else {
+                        echo "user choosed ${BRANCH_NAME}"
+                    }
+                }
             }
         }
         stage('deploy') {
@@ -29,7 +26,7 @@ pipeline {
                 echo 'deploy'
                 script {
                     if (BRANCH_NAME == "release") {
-                        withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                        withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG')]) {
                             sh '''
                                 export BUILD_NUMBER=$(cat ../build.txt)
                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
