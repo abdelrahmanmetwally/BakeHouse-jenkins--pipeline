@@ -22,7 +22,7 @@ pipeline {
                      }
 //                         else {  echo "choosen branch ${BRANCH_NAME}"}
                     
-//                 }            
+                 }            
             }
         }
         stage('deploy') {
