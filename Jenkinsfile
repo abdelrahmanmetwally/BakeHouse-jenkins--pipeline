@@ -20,7 +20,7 @@ pipeline {
                                 '''
                           }
                      }
-                        else {  echo "thanks"}
+//                         else {  echo "thanks"}
                     
                             
             }
