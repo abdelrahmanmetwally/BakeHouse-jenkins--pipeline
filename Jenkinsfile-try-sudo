@@ -12,8 +12,8 @@ pipeline {
                             sh '''
                                docker login -u ${USERNAME_iti} -p ${PASSWORD_iti}
                                
-                                docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .                             
-                                docker push  abdo23/bakehouseiti:v${BUILD_NUMBER}
+                                 sudo docker build -t  abdo23/bakehouseiti:v${BUILD_NUMBER} .                             
+                                sudo docker push  abdo23/bakehouseiti:v${BUILD_NUMBER}
 //                                echo ${BUILD_NUMBER} > ../build.txt
                                                               
 
