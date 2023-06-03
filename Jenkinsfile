@@ -7,7 +7,7 @@ pipeline {
             steps {
                 echo 'build'
                 script {
-//                   if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "preprod") {
+
                   withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
                                docker login -u ${USERNAME} -p ${PASSWORD}
@@ -19,7 +19,7 @@ pipeline {
                                 '''
                           }
                      }
-//                         else {  echo "thanks"}
+
                     
                             
             }
