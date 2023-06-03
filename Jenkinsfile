@@ -28,8 +28,8 @@ pipeline {
             steps {
                 echo 'deploy'
                   script {
-                                if (BRANCH_NAME == "release") {
-                               withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG_file')]) {
+                        if (BRANCH_NAME == "release") {
+                            withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG_file')]) {
                                 sh '''    
                                 export ${BUILD_NUMBER} = $(cat ../build.txt)
                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
@@ -37,10 +37,10 @@ pipeline {
                                 rm -f Deployment/deploy.yaml.tmp
                                 kubectl apply -f Deployment --kubeconfig ${KUBECONFIG_file} -n ${BRANCH_NAME}
                                 '''    
-                             }
+                            }
                         }
-                  }
-              }
+                    }
+            }
         }
     }
 }
