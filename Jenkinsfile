@@ -22,7 +22,7 @@ pipeline {
                      }
 //                         else {  echo "choosen branch ${BRANCH_NAME}"}
                     
-                }            
+//                 }            
             }
         }
         stage('deploy') {
@@ -32,6 +32,7 @@ pipeline {
 //                            if (BRANCH_NAME == "release") {
 //                         withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG_file')]) {
 //                             sh '''
+                                         echo 'hello'
 //                                 export ${BUILD_NUMBER} = $(cat ../build.txt)
 //                                 mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
 //                                 cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
@@ -41,7 +42,7 @@ pipeline {
 //                          }
 //                         }
 //                 }
-//             }
+              }
         }
     }
 }
