@@ -1,23 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: nodeapp-deployment
   labels:
-    app: bakehouse
-  name: bakehouse
+    app: nodeapp
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bakehouse
+      app: nodeapp
   template:
     metadata:
       labels:
-        app: bakehouse
+        app: nodeapp 
     spec:
       containers:
-      - image:  abdo23/bakehouseiti:v${BUILD_NUMBER}
-        name: bakehouse
-        imagePullPolicy: Always
+      - name: nodeserver
+        image:  abdo23/bakehouseiti:v${BUILD_NUMBER}
         ports:
         - containerPort: 80
-        resources: {}
