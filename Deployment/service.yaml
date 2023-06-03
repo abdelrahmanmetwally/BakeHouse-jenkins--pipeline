@@ -1,13 +1,18 @@
+
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodeapp-service
+  labels:
+    app: myservice
+  name: myservice
 spec:
-  selector:
-    app: nodeapp 
-  type: LoadBalancer
   ports:
-  - protocol: TCP
-    port: 5000
+  - name: bakehouseport
+    port: 80
+    protocol: TCP
     targetPort: 80
-    nodePort: 30009
+  selector:
+    app: bakehouse
+  type: NodePort
+status:
+  loadBalancer: {}
