@@ -20,7 +20,7 @@ pipeline {
                                 '''
                           }
                      }
-//                         else {  echo "choosen branch ${BRANCH_NAME}"}
+                        else {  echo "thanks"}
                     
                             
             }
