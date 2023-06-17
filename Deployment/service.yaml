@@ -12,7 +12,7 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: bakehouse1
+    app: bakehouse
   type: NodePort
 status:
   loadBalancer: {}
