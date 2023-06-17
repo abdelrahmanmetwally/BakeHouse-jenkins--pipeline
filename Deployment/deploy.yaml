@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: bakehouse
+    app: bakehouse1
   name: bakehouse1
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: bakehouse
+      app: bakehouse1
   template:
     metadata:
       labels:
-        app: bakehouse
+        app: bakehouse1
     spec:
       containers:
       - image: abdo23/bakehouseiti:v${BUILD_NUMBER} 
-        name: bakehouse
+        name: bakehouse1
         imagePullPolicy: Always
         ports:
         - containerPort: 80
