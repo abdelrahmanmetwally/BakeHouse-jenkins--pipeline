@@ -17,7 +17,7 @@ pipeline {
                                 docker build -t abdo23/bakehouseiti:v${BUILD_NUMBER} .
                                 docker push abdo23/bakehouseiti:v${BUILD_NUMBER}
                                 echo ${BUILD_NUMBER} > ../build_num.txt
-                                echo ${ENV_ITI}
+                                echo ${BRANCH_NAME}
                             '''
                         }
                     } else {
