@@ -1,6 +1,6 @@
 pipeline {
     agent { label 'smart-village' }
-       parameters {
+    parameters {
         choice(name: 'ENV_ITI', choices: ['dev', 'test', 'preprod', "release"])
     stages {
         stage('build') {
