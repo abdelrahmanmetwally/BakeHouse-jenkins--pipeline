@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'smart-village' }
-    parameters {
-        choice(name: 'ENV_ITI', choices: ['dev', 'test', 'prod', "release"])
+        parameters {
+        choice(name: 'ENV_ITI', choices: ['dev', 'test', 'prod', 'deploy'])
     
     stages {
         stage('build') {
@@ -17,7 +17,7 @@ pipeline {
                                         echo ${BUILD_NUMBER} > ../build.txt
                                     '''
                                 }
-                          }
+                            }
                 }
             }
         }
@@ -36,10 +36,10 @@ pipeline {
                                     '''
                                 }
                             }
-                    }
-            
                 }
-          }
+            
+            }
+        }
         }
     }
 }
