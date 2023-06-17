@@ -1,7 +1,7 @@
 pipeline {
     agent { label 'smart-village' }
         parameters {
-        choice(name: 'ENV_ITI', choices: ['dev', 'test', 'prod', 'deploy'])
+        choice(name: 'BRANCH_NAME', choices: ['dev', 'test', 'prod', 'deploy'])
     
     stages {
         stage('build') {
@@ -34,12 +34,9 @@ pipeline {
                                         rm -f Deployment/deploy.yaml.tmp
                                         kubectl apply -f Deployment --kubeconfig ${KUBECONFIG} -n ${BRANCH_NAME}
                                     '''
-                                }
-                            }
+                             }
                 }
-            
             }
-        }
         }
     }
 }
