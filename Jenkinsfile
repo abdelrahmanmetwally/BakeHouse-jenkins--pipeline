@@ -10,10 +10,10 @@ pipeline {
             steps {
                 script {
                     echo 'build'
-                    if (BRANCH_NAME == "release") {
-                        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME_SYSADMIN', passwordVariable: 'PASSWORD_SYSADMIN')]) {
+                    if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "prod") {
+                        withCredentials([usernamePassword(credentialsId: 'docker-hub-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                             sh '''
-                                docker login -u ${USERNAME_SYSADMIN} -p ${PASSWORD_SYSADMIN}
+                                docker login -u ${USERNAME} -p ${PASSWORD}
                                 docker build -t abdo23/bakehouseiti:v${BUILD_NUMBER} .
                                 docker push abdo23/bakehouseiti:v${BUILD_NUMBER}
                                 echo ${BUILD_NUMBER} > ../build_num.txt
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 echo 'deploy'
                 script {
-                    if (BRANCH_NAME == "dev" || BRANCH_NAME == "test" || BRANCH_NAME == "prod") {
+                    if (BRANCH_NAME == "release") {
                         withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG_ITI')]) {
                             sh '''
                                 export BUILD_NUMBER=$(cat ../build_num.txt)
