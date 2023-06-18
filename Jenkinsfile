@@ -34,11 +34,17 @@ pipeline {
                         withCredentials([file(credentialsId: 'file-iti-credentials', variable: 'KUBECONFIG_ITI')]) {
                             sh '''
                                 export BUILD_NUMBER=$(cat ../build_num.txt)
-                                mv Deployment/deploy.yaml Deployment/deploy.yaml.tmp
-                                cat Deployment/deploy.yaml.tmp | envsubst > Deployment/deploy.yaml
-                                rm -rf Deployment/deploy.yaml.tmp
-                                kubectl apply -f Deployment --kubeconfig ${KUBECONFIG_ITI} -n ${BRANCH_NAME}
-                            '''
+                                export release=$(helm list --short | grep ^bakehouse)
+                                if [ -z $release ]
+                                then 
+                                     helm install bakehouse ./bakehouse --values bakehouse/$(BRANCH_NAME)-values.yaml\
+                                     --set build  BUILD_NUMBER=${BUILD_NUMBER}
+                                else
+                                     helm upgrade bakehouse ./bakehouse --values bakehouse/$(BRANCH_NAME)-values.yaml\
+                                     --set build  BUILD_NUMBER=${BUILD_NUMBER}
+                                fi     
+                               
+                               '''
                         }
                     } else {
                         echo "user chose ${BRANCH_NAME}"
