@@ -12,8 +12,8 @@ pipeline {
                     echo hello
                     echo Abdo@01287306586 | docker login -u abdo23 --password-stdin
                     docker push abdo23/first-try:$BUILD_NUMBER
-                    docker run -d --name nginx-container -p 80:80 abdo23/first-try:$BUILD_NUMBER
-                    docker rm -f nginx-container
+                 
+                    docker rm -f nginx-container  || true
                     docker run -d --name nginx-container -p 80:80 abdo23/first-try:$BUILD_NUMBER
                 '''
             }
