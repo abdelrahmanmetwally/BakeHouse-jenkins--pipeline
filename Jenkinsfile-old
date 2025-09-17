@@ -47,7 +47,7 @@ pipeline {
                                '''
                         }
                     } else {
-                        echo "user chose ${BRANCH_NAME}"
+                        echo "user chose ${BRANCH_NAME}" 
                     }
                 }
             }
