@@ -5,7 +5,7 @@ pipeline {
         stage('run pipeline') {
             steps {
        //         git 'https://github.com/abdelrahmanmetwally/BakeHouse-jenkins--pipeline.git'
-                echo ' start '
+                echo ' start from github repo '
                 sh ' docker build -t first-try .'
                 sh 'docker tag first-try   abdo23/first-try:$BUILD_NUMBER'
                 sh ''' 
