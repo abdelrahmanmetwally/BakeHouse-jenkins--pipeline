@@ -20,6 +20,7 @@ pipeline {
             post {
                 success {
                     echo "push succeeded ya man"
+                    build job: 'freestyle-1'
                 }
                 failure {
                     echo "failed ya man"
