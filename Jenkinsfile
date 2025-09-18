@@ -22,7 +22,7 @@ pipeline {
                 // or use username and password (token) 
                 git 'https://github.com/abdelrahmanmetwally/BakeHouse-jenkins--pipeline.git'
                 echo ' start '
-                sh ' docker build -f ./other-dockerfile/Dockerfile -t $DOCKER_IMAGE .'
+                sh ' docker build -f ./other-dockerfile/Dockerfile -t $DOCKER_IMAGE ./other-Dockerfile/'
 
             }
 
@@ -30,10 +30,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-            // First tag the image
                     sh "docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER"
 
-            // Then login & push using credentials
                     withCredentials([usernamePassword( credentialsId: 'docker-cred', usernameVariable: 'USER', passwordVariable: 'PASS' )]) {
                     sh """
                         echo $PASS | docker login -u $USER --password-stdin 
