@@ -7,7 +7,7 @@ pipeline {
     }
 
     environment {
-        CONTAINER_NAME = 'nginx-app'  
+        CONTAINER_NAME = 'nginx-app'   
         DOCKER_REGISTRY = 'abdo23' 
         DOCKER_IMAGE = 'first-try'
         DEPLOY_ENV = 'dev'
