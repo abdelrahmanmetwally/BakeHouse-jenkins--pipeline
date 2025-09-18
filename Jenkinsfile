@@ -36,7 +36,7 @@ pipeline {
             // Then login & push using credentials
                     withCredentials([usernamePassword( credentialsId: 'docker-cred', usernameVariable: 'USER', passwordVariable: 'PASS' )]) {
                     sh """
-                        echo \$PASS | docker login -u \$USER --password-stdin $DOCKER_REGISTRY
+                        echo $PASS | docker login -u $USER --password-stdin 
                         docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER
                     """
                     }
