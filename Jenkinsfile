@@ -27,17 +27,20 @@ pipeline {
             }
 
         }
-        stage('push docker image ') {
+        stage('Push Docker Image') {
             steps {
+                script {
+            // First tag the image
+                    sh "docker tag $DOCKER_IMAGE $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER"
 
-                sh 'docker tag $DOCKER_IMAGE   $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER'
-                sh ''' 
-                    echo hello
-                    withCredentials([usernamePassword(credentialsId: 'docker-cred' , usernameVariable: 'USER', passwordVariable: 'PASS')])
-                    echo $PASS | docker login -u $USER --password-stdin
-                    docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER
-                    
-                '''
+            // Then login & push using credentials
+                    withCredentials([usernamePassword( credentialsId: 'docker-cred', usernameVariable: 'USER', passwordVariable: 'PASS' )]) {
+                    sh """
+                        echo \$PASS | docker login -u \$USER --password-stdin $DOCKER_REGISTRY
+                        docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER
+                    """
+                    }
+                }
             }
         }
         stage('deploy') {
