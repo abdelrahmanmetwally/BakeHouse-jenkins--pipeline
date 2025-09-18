@@ -41,6 +41,13 @@ pipeline {
                 }
             }
         }
+        stage('Approval to Deploy') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: "Deploy ${DOCKER_IMAGE}:${BUILD_NUMBER} to ${DEPLOY_ENV}?", ok: 'Deploy'
+                }
+            }
+        }
         stage('deploy') {
             steps {
                 sh ' docker rm -f $CONTAINER_NAME-$DEPLOY_ENV  || true'
