@@ -22,7 +22,7 @@ pipeline {
                 // or use username and password (token) 
                 git 'https://github.com/abdelrahmanmetwally/BakeHouse-jenkins--pipeline.git'
                 echo ' start '
-                sh ' docker build -f ./other-dockerfile/Dockerfile -t $DOCKER_IMAGE ./other-Dockerfile/'
+                sh ' docker build -f ./other-dockerfile/Dockerfile -t $DOCKER_IMAGE ./other-dockerfile/'
 
             }
 
