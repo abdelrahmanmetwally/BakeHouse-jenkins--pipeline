@@ -24,8 +24,7 @@ pipeline {
                 sh 'docker tag $DOCKER_IMAGE   $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER'
                 sh ''' 
                     echo hello
-                    // withCredentials([usernamePassword(credentialsId: 'docker-cred' , usernameVariable: 'USER', passwordVariable: 'PASS')])
-                    // echo $PASS | docker login -u $USER --password-stdin
+
                     echo  $MY_CREDS_PSW | docker login -u $MY_CREDS_USR --password-stdin
                     docker push $DOCKER_REGISTRY/$DOCKER_IMAGE:$BUILD_NUMBER
                  
