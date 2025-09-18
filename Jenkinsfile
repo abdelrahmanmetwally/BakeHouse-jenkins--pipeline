@@ -5,6 +5,10 @@ pipeline {
         timestamps()
         timeout(time: 20 , unit: 'MINUTES')
     }
+    parameters {
+        string(name: 'CONTAINER_NAME', defaultValue: 'nginx-app', description: 'Base container name')
+        choice(name: 'DEPLOY_ENV', choices: ['dev','staging','prod'], description: 'Deployment environment')
+    }
 
     environment {
         CONTAINER_NAME = 'nginx-app'   
