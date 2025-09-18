@@ -8,7 +8,7 @@ pipeline {
 
     environment {
         CONTAINER_NAME = 'nginx-app'  
-        DOCKER_REGISTRY = 'abdo23'
+        DOCKER_REGISTRY = 'abdo23' 
         DOCKER_IMAGE = 'first-try'
         DEPLOY_ENV = 'dev'
        // MY_CREDS = credentials('docker-cred')   > used with>  echo  $MY_CREDS_PSW | docker login -u $MY_CREDS_USR --password-stdin
