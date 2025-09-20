@@ -59,7 +59,7 @@ pipeline {
             echo "pipeline succeeded "
             build job: 'freestyle1'
             slackSend color: 'good', message: 'this whole pipeline succeeded'
-        }
+        
    }
         failure {
             echo "pipeline failed"
