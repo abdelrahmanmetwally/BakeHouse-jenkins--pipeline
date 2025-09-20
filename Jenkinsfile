@@ -1,5 +1,14 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_CONTAINER = 'node-app'
+        DOCKER_IMAGE = 'iti'
+
+    }
+    options {
+        timeout(time: 1, unit: 'HOURS') 
+    }
+
 
     stages {
         stage('Hello') {
@@ -21,8 +30,8 @@ pipeline {
         stage('build and tagging ') {
             steps {
                 sh '''
-                      docker build -t iti:$BUILD_NUMBER .
-                      docker tag iti:$BUILD_NUMBER  abdo23/iti:$BUILD_NUMBER
+                      docker build -t $DOCKER_IMAGE:$BUILD_NUMBER .
+                      docker tag $DOCKER_IMAGE:$BUILD_NUMBER  abdo23/$DOCKER_IMAGE:$BUILD_NUMBER
                 '''
                 
             }
@@ -30,11 +39,21 @@ pipeline {
         stage('deploy') {
             steps { 
                 sh '''
-                      docker rm -f node-app || true
-                      docker run -d --name node-app -p 3000:3000  iti:$BUILD_NUMBER
+                      docker rm -f $DOCKER_CONTAINER || true
+                      docker run -d --name $DOCKER_CONTAINER -p 3000:3000  $DOCKER_IMAGE:$BUILD_NUMBER
                 '''
                 
             }
+            
         }
+    }
+    post {
+        success {
+            echo "pipeline succeeded "
+            build job: 'freestyle-1'
+   }
+        failure {
+            echo "pipeline failed"
+          }
     }
 }
