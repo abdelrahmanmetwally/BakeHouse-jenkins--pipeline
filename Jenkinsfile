@@ -36,6 +36,13 @@ pipeline {
                 
             }
         }
+        stage('Approval to Deploy') {
+            steps {
+                timeout(time: 15, unit: 'MINUTES') {
+                    input message: "Deploy ${DOCKER_IMAGE}:${BUILD_NUMBER} ?", ok: 'Deploy'
+                }
+            }
+        }
         stage('deploy') {
             steps { 
                 sh '''
@@ -50,7 +57,7 @@ pipeline {
     post {
         success {
             echo "pipeline succeeded "
-            build job: 'freestyle-1'
+            build job: 'freestyle1'
    }
         failure {
             echo "pipeline failed"
